@@ -3,16 +3,16 @@
 #include <Adafruit_Sensor.h>
 #include <DHT.h>
 
-// WiFi配置
+// WiFi
 const char* ssid = "TP-LINK_5569";
 const char* password = "68686868";
 
-// DHT传感器配置
+// DHT
 #define DHTPIN 16     
 #define DHTTYPE DHT11     
 DHT dht(DHTPIN, DHTTYPE);
 
-// 雨滴和光敏传感器配置
+//  raindrop and light
 const int analogPin = A4;      
 const int digitalPin = 17;     
 const int ledPinRain = 13;     
@@ -24,7 +24,7 @@ int rainAnalogState = 0;
 boolean rainDigitalState = 0;  
 int lightAnalogState = 0;      
 
-// 风扇配置
+// fan
 const int motorIn1 = 15;  
 const int motorIn2 = 26;   
 
@@ -36,7 +36,7 @@ int fanSpeedState = 0;
 
 AsyncWebServer server(80);
 
-// 函数声明
+
 void updateFanSpeed();
 void clockwise(int Speed);
 
@@ -48,7 +48,7 @@ String readDHTTemperature() {
   }
   else {
     if (t > 30) {
-      fanSpeedState = 1; // 自动打开风扇，设为最低档
+      fanSpeedState = 1; // open fan automatically
       updateFanSpeed();
     }
     Serial.println(t);
@@ -300,7 +300,7 @@ void setup(){
 }
 
 void loop(){
-  // 雨滴传感器部分
+  // rain sensor
   rainAnalogState = analogRead(analogPin);    
   rainDigitalState = digitalRead(digitalPin); 
   if(rainDigitalState == HIGH) 
@@ -312,7 +312,7 @@ void loop(){
     digitalWrite(ledPinRain, HIGH); 
   }
 
-  // 光敏传感器部分
+  // light sensor
   lightAnalogState = analogRead(photocellPin);  
   if(lightAnalogState >= 400) 
   {
